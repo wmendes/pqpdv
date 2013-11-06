@@ -31,16 +31,30 @@
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
+                <img id="MyImage">
             </div>
         </div>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+
             // limit capture operation to 3 images
-            var options = { limit: 3 };
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                //destinationType: Camera.DestinationType.DATA_URL
+             }); 
+
+            function onSuccess(imageData) {
+                var image = document.getElementById('myImage');
+                image.src = "data:image/jpeg;base64," + imageData;
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
 
             //navigator.device.capture.captureImage(captureSuccess, captureError, options);
-            console.log(navigator.camera.getPicture());
+
+            console.log(navigator.camera);
         </script>
     </body>
 </html>
